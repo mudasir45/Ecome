@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     
     'main',
     'accounts',
+
+    'main.templatetags',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +136,6 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'user_login'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

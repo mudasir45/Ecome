@@ -6,7 +6,8 @@ from .models import product
 from .models import category
 from .models import cart
 from .models import order
-# Create your views here.
+
+
 def home(request):
     Products = product.objects.all()
     Categories = category.objects.all()

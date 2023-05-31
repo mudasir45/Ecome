@@ -58,3 +58,6 @@ def addToCart(request):
         }
         return JsonResponse(data)
     
+def checkOut(request):
+
+    return render(request, 'checkout.html')

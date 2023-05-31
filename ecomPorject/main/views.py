@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 from .models import product
@@ -8,6 +9,7 @@ from .models import cart
 from .models import order
 
 
+@login_required
 def home(request):
     Products = product.objects.all()
     Categories = category.objects.all()

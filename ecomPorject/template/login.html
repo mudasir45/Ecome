@@ -98,7 +98,7 @@
 						</div>
 					</div>
 					<div class="card-footer">
-						<a class="btn btn-secondary btn-sm" id="add_more"><i class="fas fa-plus-circle"></i> Add</a>
+						<a href="{% url 'userSignUp' %}" class="btn btn-secondary btn-sm" id="add_more"><i class="fas fa-plus-circle"></i>Don't have an account</a>
 						<a class="btn btn-secondary btn-sm" id="remove_more"><i class="fas fa-trash-alt"></i> Remove</a>
 						<button type="submit" class="btn btn-success btn-sm float-right submit_btn"><i
 							class="fas fa-arrow-alt-circle-right"></i> Submit</button>
@@ -136,7 +136,7 @@
 					'</div>' +
 					'<input type="email" placeholder="Student Email" class="form-control" />' +
 					'</div>
-	</div > ';
+					</div > ';
 
 				$('#dynamic_container').append(html);
 				$('#remove_more').fadeIn(function () {
@@ -158,7 +158,8 @@
 				}
 
 			});
-		});</script>
+		});
+	</script>
 </body>
 
 </html>

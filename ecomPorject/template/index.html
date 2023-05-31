@@ -86,6 +86,7 @@
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
+										{% load at_to_cart %}
 										{% for product in Products %}
 										<!-- product -->
 										<div class="product">
@@ -120,10 +121,10 @@
 													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 												</div>
 											</div>
-											{% load at_to_cart %}
+											
 
 											<div class="add-to-cart">
-												<button type="submit" onclick="product_add_to_cart({{product.id}})" class=" product_cart_btn
+												<button type="submit" onclick="product_add_to_cart({{product.id}})" class=" product_cart_btn-{{product.id}}
 												{% if product.id|checkAdToCart:request.user.id %}
 													btn-success
 												{% else %}
@@ -173,9 +174,9 @@
 					},
 					success: function(data) {
 						console.log(data)
-						$(`.product_cart_btn`).removeClass('add-to-cart-btn');
-						$(`.product_cart_btn`).addClass('btn-success');
-						$(`.product_cart_btn`).text('in cart');
+						$(`.product_cart_btn-${product_id}`).removeClass('add-to-cart-btn');
+						$(`.product_cart_btn-${product_id}`).addClass('btn-success');
+						$(`.product_cart_btn-${product_id}`).text('in cart');
 						},
 						error: function(xhr) {
 							// Handle error

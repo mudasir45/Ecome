@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 register = Library()
 
-@register.filter1
+@register.filter
 # check user has done add to cart or not 
 def checkAdToCart(product_id, user_id):
     Product = product.objects.get(id = product_id)

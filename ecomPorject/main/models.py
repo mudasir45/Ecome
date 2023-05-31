@@ -33,7 +33,7 @@ class cart(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.product.title
+        return f'{self.user.username} --> {self.product.title}'
 
 STATUS_CHOICES = (
     ('complete', 'complete'),

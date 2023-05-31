@@ -173,10 +173,16 @@
 						'product_id':product_id,
 					},
 					success: function(data) {
-						console.log(data)
+						console.log(data.CartCount)
 						$(`.product_cart_btn-${product_id}`).removeClass('add-to-cart-btn');
 						$(`.product_cart_btn-${product_id}`).addClass('btn-success');
 						$(`.product_cart_btn-${product_id}`).text('in cart');
+						
+						
+						$(`.cart-count`).text(data.CartCount);
+
+
+
 						},
 						error: function(xhr) {
 							// Handle error

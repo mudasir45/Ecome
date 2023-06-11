@@ -6,6 +6,7 @@ from .models import product
 from .models import category
 from .models import cart
 from .models import order
+from .models import productImages
 
 
 @login_required
@@ -88,7 +89,14 @@ def addToCart(request):
         return JsonResponse(data)
     
 def checkOut(request):
+    
     return render(request, 'checkout.html')
 
-def ProductDetails(request):
-    return render(request, 'product.html')
+def ProductDetails(request, id):
+    Product = product.objects.get(id = id)
+    ProductImages = productImages.objects.filter(product = Product)
+    context = {
+        'Product':Product,
+        'ProductImages':ProductImages,
+    }
+    return render(request, 'product.html', context)

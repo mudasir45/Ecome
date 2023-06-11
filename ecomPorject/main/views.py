@@ -49,21 +49,26 @@ def shop(request):
 def shopByCategory(request):
     if request.method == 'POST':
         ctg_id = request.POST.get('ctg_id')
-        if ctg_id == 0:
+        lable = 0
+        if ctg_id == '0':
             Products = product.objects.all()
             Categories = category.objects.all()
+            lable = 0
             context = {
             'Products':Products,
-            'Categories':Categories
+            'Categories':Categories,
+            'lable':lable,
             }
             return render(request, 'store.html', context)
         else:
             Category = category.objects.get(id = ctg_id)
             Products = product.objects.filter(category = Category)
             Categories = category.objects.all()
+            lable = ctg_id
             context = {
                 'Products':Products,
-                'Categories':Categories
+                'Categories':Categories,
+                'lable':lable,
             }
             return render(request, 'store.html', context)
 
@@ -83,5 +88,7 @@ def addToCart(request):
         return JsonResponse(data)
     
 def checkOut(request):
-
     return render(request, 'checkout.html')
+
+def ProductDetails(request):
+    return render(request, 'product.html')

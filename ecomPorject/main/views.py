@@ -15,33 +15,57 @@ def home(request):
     Categories = category.objects.all()
     CartProducts = cart.objects.filter(user = current_user)
     CartCount = CartProducts.count()
+    totalPrice = 0
+    for CartProduct in CartProducts:
+        totalPrice += CartProduct.product.price
 
     context = {
         'Products':Products,
         'Categories':Categories,
         'CartProducts':CartProducts,
         'CartCount':CartCount,
+        'totalPrice':totalPrice,
     }
     return render(request, 'index.html', context)
 
 def shop(request):
+    current_user = request.user
     Products = product.objects.all()
     Categories = category.objects.all()
+    CartProducts = cart.objects.filter(user = current_user)
+    CartCount = CartProducts.count()
+    totalPrice = 0
+    for CartProduct in CartProducts:
+        totalPrice += CartProduct.product.price
     context = {
         'Products':Products,
-        'Categories':Categories
+        'Categories':Categories,
+        'CartCount':CartCount,
+        'CartProducts':CartProducts,
+        'totalPrice':totalPrice,
     }
-    return render(request, 'shop.html', context)
+    return render(request, 'store.html', context)
 
-def shorByCategory(request, ctg_id):
-    Category = category.objects.get(id = ctg_id)
-    Products = product.objects.filter(category = Category)
-    Categories = category.objects.all()
-    context = {
-        'Products':Products,
-        'Categories':Categories
-    }
-    return render(request, 'shop.html', context)
+def shopByCategory(request):
+    if request.method == 'POST':
+        ctg_id = request.POST.get('ctg_id')
+        if ctg_id == 0:
+            Products = product.objects.all()
+            Categories = category.objects.all()
+            context = {
+            'Products':Products,
+            'Categories':Categories
+            }
+            return render(request, 'store.html', context)
+        else:
+            Category = category.objects.get(id = ctg_id)
+            Products = product.objects.filter(category = Category)
+            Categories = category.objects.all()
+            context = {
+                'Products':Products,
+                'Categories':Categories
+            }
+            return render(request, 'store.html', context)
 
 def addToCart(request):
     if request.method == 'POST':

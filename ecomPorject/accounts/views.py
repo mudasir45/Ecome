@@ -5,8 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
-# Create 
-
 def userSignUp(request):
     if request.method == 'POST':
         fullName = request.POST.get('fname')

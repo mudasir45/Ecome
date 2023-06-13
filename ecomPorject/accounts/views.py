@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
-# Create your 
+# Create 
 
 def userSignUp(request):
     if request.method == 'POST':

@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
-# Create your views here
+# Create your views 
 
 def userSignUp(request):
     if request.method == 'POST':

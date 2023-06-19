@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
@@ -89,7 +90,16 @@ def addToCart(request):
         return JsonResponse(data)
     
 def checkOut(request):
-    return render(request, 'checkout.html')
+    current_user = request.user
+    UserCart = cart.objects.filter(user = current_user)
+    totalPrice = 0
+    for order in UserCart:
+        totalPrice += order.product.price
+    context = {
+        'UserCart':UserCart,
+        'totalPrice':totalPrice,
+    }
+    return render(request, 'checkout.html', context)
 
 def ProductDetails(request, id):
     Product = product.objects.get(id = id)
@@ -99,3 +109,26 @@ def ProductDetails(request, id):
         'ProductImages':ProductImages,
     }
     return render(request, 'product.html', context)
+
+
+def PlaceOrder(request):
+    if request.method == 'POST':
+        current_user = request.user
+        zip_code = request.POST.get('zip_code')
+        address = request.POST.get('address')
+        paymentMethod = request.POST.get('paymentMethod')
+        NewOrder = order.objects.create(
+            user = current_user,
+            address = address,
+            Payment_method = paymentMethod,
+            postel_code = zip_code
+        )
+        NewOrder.save()
+
+        UserCart = cart.objects.filter(user = current_user)
+        for order in NewOrder:
+            NewOrder.product.add(order.product)
+        
+        NewOrder.save()
+        messages.success(request, "Order have been blaced successfully!")
+        return redirect('ProductDetails')

@@ -42,8 +42,9 @@ STATUS_CHOICES = (
 )
 class order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    product = models.ForeignKey(product, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ManyToManyField(product)
     address = models.CharField(max_length=50, null=True, blank=True)
+    Payment_method = models.CharField(max_length=100, null=True, blank=True)
     postel_code = models.IntegerField(null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True)
     status = models.CharField(choices=STATUS_CHOICES, max_length=20, default='pending')

@@ -132,3 +132,12 @@ def PlaceOrder(request):
         NewOrder.save()
         messages.success(request, "Order have been blaced successfully!")
         return redirect('checkOut')
+    
+def OrderList(request):
+    current_user = request.user
+    UserOrderList = order.objects.filter(user = current_user)
+    context = {
+        'UserOrderList':UserOrderList,
+    }
+
+    return render(request, 'order.html', context)

@@ -29,9 +29,9 @@
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
-				<form class="row">
+				<form action="{% url 'PlaceOrder' %}" method="post" class="row">
+					{% csrf_token %}
 					{% include 'alert.html' %}
-					<form action="{% url 'PlaceOrder' %}" method="post"></form>
 					<div class="col-md-7">
 
 						<!-- Shiping Details -->

@@ -126,9 +126,9 @@ def PlaceOrder(request):
         NewOrder.save()
 
         UserCart = cart.objects.filter(user = current_user)
-        for order in NewOrder:
-            NewOrder.product.add(order.product)
+        for Cart in UserCart:
+            NewOrder.product.add(Cart.product)
         
         NewOrder.save()
         messages.success(request, "Order have been blaced successfully!")
-        return redirect('ProductDetails')
+        return redirect('checkOut')

@@ -50,4 +50,4 @@ class order(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, max_length=20, default='pending')
 
     def __str__(self) -> str:
-        return f'{self.product.title} - {self.status}'
+        return f'{self.user.username} - {self.status}'

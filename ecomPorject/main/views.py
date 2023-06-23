@@ -96,7 +96,7 @@ def addToCart(request):
         }
         return JsonResponse(data)
     
-    
+
 def checkOut(request):
     current_user = request.user
     UserCart = cart.objects.filter(user = current_user)
@@ -139,7 +139,7 @@ def PlaceOrder(request):
         
         NewOrder.save()
         messages.success(request, "Order have been blaced successfully!")
-        return redirect('checkOut')
+        return redirect('OrderList')
     
 def OrderList(request):
     current_user = request.user

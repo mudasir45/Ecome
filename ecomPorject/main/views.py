@@ -80,11 +80,18 @@ def addToCart(request):
         Product = product.objects.get(id = product_id)
         current_user = request.user
         CartCount = cart.objects.filter(user = request.user).count()
-        
-        Cart, get = cart.objects.get_or_create(user = current_user, product = Product)
-        Cart.save()
+        message = ""
+        Cart = cart.objects.filter(user = current_user, product = Product).first()
+        if Cart is not None:
+            Cart.delete()
+            message = "Add to Cart"
+        else:
+            Cart = cart.objects.create(user = current_user, product = Product)
+            Cart.save()
+            message = "Remove from Cart"
+
         data = {
-            'message':'Add to cart done',
+            'message':message,
             'CartCount':CartCount,
         }
         return JsonResponse(data)

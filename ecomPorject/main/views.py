@@ -96,6 +96,7 @@ def addToCart(request):
         }
         return JsonResponse(data)
     
+    
 def checkOut(request):
     current_user = request.user
     UserCart = cart.objects.filter(user = current_user)

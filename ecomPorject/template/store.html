@@ -196,9 +196,17 @@
 					},
 					success: function(data) {
 						console.log(data.CartCount)
-						$(`.product_cart_btn-${product_id}`).removeClass('add-to-cart-btn');
-						$(`.product_cart_btn-${product_id}`).addClass('btn-success');
-						$(`.product_cart_btn-${product_id}`).text('in cart');
+						if (data.message === "Remove from Cart"){
+							$(`.product_cart_btn-${product_id}`).removeClass('add-to-cart-btn');
+							$(`.product_cart_btn-${product_id}`).addClass('btn-success');
+							$(`.product_cart_btn-${product_id}`).text(data.message);
+						}
+						else{
+							$(`.product_cart_btn-${product_id}`).addClass('add-to-cart-btn');
+							$(`.product_cart_btn-${product_id}`).removeClass('btn-success');
+							$(`.product_cart_btn-${product_id}`).text(data.message);
+						}
+
 						
 						
 						$(`.cart-count`).text(data.CartCount);

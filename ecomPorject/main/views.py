@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
-
 from .models import product
 from .models import category
 from .models import cart

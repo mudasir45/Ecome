@@ -110,11 +110,20 @@ def checkOut(request):
     return render(request, 'checkout.html', context)
 
 def ProductDetails(request, id):
+    current_user = request.user
     Product = product.objects.get(id = id)
+    CartProducts = cart.objects.filter(user = current_user)
+    CartCount = CartProducts.count()
+    totalPrice = 0
+    for CartProduct in CartProducts:
+        totalPrice += CartProduct.product.price
     ProductImages = productImages.objects.filter(product = Product)
     context = {
         'Product':Product,
         'ProductImages':ProductImages,
+        'CartProducts':CartProducts,
+        'CartCount':CartCount,
+        'totalPrice':totalPrice,
     }
     return render(request, 'product.html', context)
 

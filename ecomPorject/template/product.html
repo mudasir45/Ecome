@@ -4,6 +4,7 @@
 	{% block title %}<title> single product </title>{% endblock %}
 
 	{% block content %}
+	{% load at_to_cart %}
 
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -100,16 +101,41 @@
 								</label>
 							</div> -->
 
-							<div class="add-to-cart">
-								<div class="qty-label">
+							<div  class="add-to-cart">
+								<div style="display: block; margin-bottom: 15px;" class="qty-label">
 									Qty
 									<div class="input-number">
-										<input type="number">
+										<input type="number" min="1" value="1">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i><a href="{% url 'checkOut' %}">Buy Now</a> </button>
+								<!-- <div>
+									<button style="margin-top: 15px;" class="add-to-cart-btn"><i class="fa fa-shopping-cart "></i><a href="{% url 'checkOut' %}" >Check Out</a> </button>
+								</div> -->
+								
+								<div style="display: inline-block;" class="add-to-cart">
+									<button  type="submit" onclick="product_add_to_cart({{Product.id}})" class=" product_cart_btn-{{Product.id}}
+									{% if Product.id|checkAdToCart:request.user.id %}
+									add-to-cart-btn
+									{% else %}
+										add-to-cart-btn
+									{% endif %}
+									"><i class="fa fa-shopping-cart"></i> 
+									{% if Product.id|checkAdToCart:request.user.id %}
+									Remove from Cart
+									{% else %}
+										add to cart
+									{% endif %}
+								</button>													
+								</div>
+
+								<div style="margin-top: 15px; display: inline;" class="add-to-cart">
+									<button  type="button" onclick="window.location.href='{% url 'checkOut' %}'" class=" product_cart_btn
+									add-to-cart-btn"><i class="fa fa-shopping-cart"></i> 
+									Check Out
+								</button>													
+								</div>
 							</div>
 
 							<ul class="product-btns">
@@ -359,4 +385,63 @@
 		<!-- Section -->
 		
 		<!-- /Section -->
+
+		<script>
+
+			function product_add_to_cart(product_id){
+				console.log(product_id)
+				var csrfToken = getCookie('csrftoken');
+				$.ajax({
+					type: 'POST',
+					url: '/addToCart/',
+					data:{
+						'csrfmiddlewaretoken': csrfToken ,
+						'product_id':product_id,
+					},
+					success: function(data) {
+						console.log(data.CartCount)
+						
+						if (data.message === "Remove from Cart"){
+							// $(`.product_cart_btn-${product_id}`).removeClass('add-to-cart-btn');
+							// $(`.product_cart_btn-${product_id}`).addClass('btn-success');
+							$(`.product_cart_btn-${product_id}`).text(data.message);
+						}
+						else{
+							$(`.product_cart_btn-${product_id}`).addClass('add-to-cart-btn');
+							$(`.product_cart_btn-${product_id}`).removeClass('btn-success');
+							$(`.product_cart_btn-${product_id}`).text(data.message);
+						}
+
+						
+						
+						$(`.cart-count`).text(data.CartCount);
+
+
+
+						},
+						error: function(xhr) {
+							// Handle error
+							console.log(xhr.responseText);
+						}
+					});
+			}
+
+			function getCookie(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie !== '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = cookies[i].trim();
+						// Check if the cookie name matches the csrfmiddlewaretoken format
+						if (cookie.substring(0, name.length + 1) === (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+
+
+		</script>
 {% endblock %}
